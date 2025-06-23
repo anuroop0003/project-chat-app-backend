@@ -8,6 +8,8 @@ export default async function handler(req: Request, res: Response) {
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
+  console.log("origin",origin);
+  
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -17,6 +19,9 @@ export default async function handler(req: Request, res: Response) {
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
   const { email, inviterName } = req.body;
+
+  console.log("req.body", req.body);
+  
 
   if (!email || !inviterName) {
     return res.status(400).json({ error: 'Missing required fields' });
