@@ -2,14 +2,12 @@ import { Request, Response } from 'express';
 import nodemailer from 'nodemailer';
 
 export default async function handler(req: Request, res: Response) {
-  // 🔥 CORS headers
   const allowedOrigins = ['http://localhost:5173', 'https://your-app.web.app'];
   const origin = req.headers.origin || '';
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
-  console.log("origin",origin);
-  
+
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -20,12 +18,7 @@ export default async function handler(req: Request, res: Response) {
 
   const { email, inviterName } = req.body;
 
-  console.log("req.body", req.body);
-  
-
-  if (!email || !inviterName) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
+  if (!email || !inviterName) return res.status(400).json({ error: 'Missing required fields' });
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
